@@ -1,0 +1,48 @@
+{
+  "name": "node-red-contrib-knot",
+  "version": "1.0.0",
+  "description": "Node-RED library for KNoT meta plataform",
+  "main": "index.js",
+  "node-red": {
+    "nodes": {}
+  },
+  "scripts": {
+    "start": "node-red",
+    "lint": "eslint --cache .",
+    "format": "prettier --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/esdrasjnr/node-red-contrib-knot.git"
+  },
+  "keywords": [
+    "node-red",
+    "knot",
+    "iot"
+  ],
+  "author": "Esdras Júnior",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/esdrasjnr/node-red-contrib-knot/issues"
+  },
+  "homepage": "https://github.com/esdrasjnr/node-red-contrib-knot#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "husky": ">=4",
+    "lint-staged": ">=10",
+    "prettier": "^2.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
+  }
+}
