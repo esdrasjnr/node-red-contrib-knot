@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "Node-RED library for KNoT meta plataform",
   "main": "index.js",
-  "node-red": {
-    "nodes": {}
-  },
   "scripts": {
     "start": "node-red",
+    "update": "_LIB=`pwd` && cd $HOME/.node-red && yarn add $_LIB",
     "lint": "eslint --cache .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "add:node": "node scripts/add-node.js",
+    "link:nodes": "node scripts/link-nodes.js"
   },
   "repository": {
     "type": "git",
