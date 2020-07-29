@@ -1,0 +1,28 @@
+<script type="text/javascript">
+  RED.nodes.registerType('unregister', {
+    category: 'KNoT SDK',
+    color: '#43b53f',
+    icon: 'knot.svg',
+    defaults: {
+      amqp: { value: '', required: true, type: 'amqp-broker' },
+      thingId: { value: '' },
+    },
+    inputs: 1,
+    label: 'unregister',
+  });
+</script>
+
+<script type="text/html" data-template-name="unregister">
+  <div class="form-row">
+    <label for="node-input-amqp"><i class="fa fa-globe"></i> Server</label>
+    <input type="text" id="node-input-amqp">
+  </div>
+  <div class="form-row">
+    <label for="node-input-thingId"><i class="fa fa-id-badge"></i> Thing ID</label>
+    <input type="text" id="node-input-thingId">
+  </div>
+</script>
+
+<script type="text/html" data-help-name="unregister">
+  <p>This node unregister the existing thing in KNoT Cloud with the given ID</p>
+</script>

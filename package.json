@@ -3,6 +3,14 @@
   "version": "1.0.0",
   "description": "Node-RED library for KNoT meta plataform",
   "main": "index.js",
+  "node-red": {
+    "nodes": {
+      "component-thing": "nodes/component/thing.js",
+      "config-amqp-broker": "nodes/config/amqp-broker.js",
+      "sdk-register": "nodes/sdk/register.js",
+      "sdk-unregister": "nodes/sdk/unregister.js"
+    }
+  },
   "scripts": {
     "start": "node-red",
     "update": "_LIB=`pwd` && cd $HOME/.node-red && yarn add $_LIB",
@@ -26,7 +34,9 @@
     "url": "https://github.com/esdrasjnr/node-red-contrib-knot/issues"
   },
   "homepage": "https://github.com/esdrasjnr/node-red-contrib-knot#readme",
-  "dependencies": {},
+  "dependencies": {
+    "@cesarbr/knot-cloud-sdk-js": "^3.0.0"
+  },
   "devDependencies": {
     "eslint": "^7.4.0",
     "eslint-config-airbnb-base": "^14.2.0",
