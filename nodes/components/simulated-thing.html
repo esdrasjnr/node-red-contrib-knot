@@ -1,0 +1,140 @@
+<script type="text/javascript">
+  RED.nodes.registerType('simulated-thing', {
+    category: 'KNoT components',
+    color: '#43b53f',
+    icon: 'knot.svg',
+    defaults: {
+      amqp: { value: '', required: true, type: 'amqp-broker' },
+      thingId: { value: '', required: true },
+      name: { value: '', required: true },
+      schema: { value: [] },
+    },
+    inputs: 1,
+    outputs: 2,
+    label: function () {
+      return this.name || 'simulated-thing';
+    },
+    inputLabels: 'publish',
+    outputLabels: ['on update', 'on request'],
+    oneditprepare: function () {
+      $('#node-input-schema-list').editableList({
+        addItem: function (container, idx, data) {
+          const { sensorId = '', name = '', valueType = '', typeId = '', unit = '' } = data;
+
+          const fragment = document.createDocumentFragment();
+          const row1 = $('<div/>', { class: 'list-row first' }).appendTo(fragment);
+          const row2 = $('<div/>', { class: 'list-row second' }).appendTo(fragment);
+
+          $('<label/>').text('Sensor ID').appendTo(row1);
+          $('<input/>', { class: 'node-input-schema-item-sensorId', type: 'text' })
+            .val(sensorId)
+            .appendTo(row1);
+          $('<label/>').text('Name').appendTo(row1);
+          $('<input/>', { class: 'node-input-schema-item-name wide', type: 'text' })
+            .val(name)
+            .appendTo(row1);
+
+          $('<label/>').text('Value type').appendTo(row2);
+          $('<input/>', { class: 'node-input-schema-item-valueType', type: 'text' })
+            .val(valueType)
+            .appendTo(row2);
+          $('<label/>').text('Type ID').appendTo(row2);
+          $('<input/>', { class: 'node-input-schema-item-typeId', type: 'text' })
+            .val(typeId)
+            .appendTo(row2);
+          $('<label/>').text('Unit').appendTo(row2);
+          $('<input/>', { class: 'node-input-schema-item-unit', type: 'text' })
+            .val(unit)
+            .appendTo(row2);
+
+          container[0].appendChild(fragment);
+        },
+        removable: true,
+      });
+
+      $('#node-input-schema-list').editableList('addItems', this.schema);
+    },
+    oneditsave: function () {
+      const schema = $('#node-input-schema-list').editableList('items');
+      const node = this;
+      node.schema = [];
+
+      schema.each(function () {
+        const getValue = (id, type) => {
+          const value = $(this).find(`.node-input-schema-item-${id}`).val();
+          if (type === 'int') {
+            return isNaN(parseInt(value)) ? '' : parseInt(value);
+          }
+          return value;
+        };
+
+        node.schema.push({
+          sensorId: getValue('sensorId', 'int'),
+          name: getValue('name', 'str'),
+          valueType: getValue('valueType', 'int'),
+          typeId: getValue('typeId', 'int'),
+          unit: getValue('unit', 'int'),
+        });
+      });
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="simulated-thing">
+  <style>
+    #node-input-schema-list {
+      min-height: 10rem;
+      overflow: hidden;
+    }
+
+    #node-input-schema-list .list-row {
+      display: flex;
+      align-items: center;
+    }
+
+    #node-input-schema-list .list-row.first {
+      margin-bottom: 0.3rem;
+    }
+
+    #node-input-schema-list .list-row.second {
+      margin-top: 0.3rem;
+    }
+
+    #node-input-schema-list .list-row label {
+      width: 5rem;
+      box-sizing: border-box;
+      padding-right: 0.3rem;
+      text-align: right;
+    }
+
+    #node-input-schema-list .list-row input {
+      width: 3rem;
+    }
+
+    #node-input-schema-list .list-row input.wide {
+      width: 11rem;
+    }
+  </style>
+  <div class="form-row">
+    <label for="node-input-amqp"><i class="fa fa-globe"></i> Server</label>
+    <input type="text" id="node-input-amqp">
+  </div>
+  <div class="form-row">
+    <label for="node-input-thingId"><i class="fa fa-id-badge"></i> Thing ID</label>
+    <input type="text" id="node-input-thingId">
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name">
+  </div>
+  <div class="form-row">
+    <label><i class="fa fa-list"></i> Schema</label>
+  </div>
+  <div class="form-row">
+    <ol id="node-input-schema-list"></ol>
+  </div>
+</script>
+
+<script type="text/html" data-help-name="simulated-thing">
+  <p>This node represents a simulated thing at KNoT Cloud, writing and listening to events associated to it</p>
+</script>
