@@ -8,6 +8,7 @@
       "config-amqp-broker": "nodes/config/amqp-broker.js",
       "sdk-get-data": "nodes/sdk/get-data.js",
       "sdk-get-devices": "nodes/sdk/get-devices.js",
+      "sdk-on-data": "nodes/sdk/on-data.js",
       "sdk-publish-data": "nodes/sdk/publish-data.js",
       "sdk-register": "nodes/sdk/register.js",
       "sdk-set-data": "nodes/sdk/set-data.js",
