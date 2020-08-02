@@ -2,8 +2,8 @@ module.exports = RED => {
   function SimulatedThing(config) {
     RED.nodes.createNode(this, config);
     const { client } = RED.nodes.getNode(config.amqp);
-    const { thingId, name, schema } = config;
-    const thing = { thingId, name, schema };
+    const { thingId, name, config: configList } = config;
+    const thing = { thingId, name, config: configList };
 
     this.on('close', async done => {
       try {
@@ -34,7 +34,7 @@ module.exports = RED => {
       try {
         await client.connect();
         await client.register(thingId, name);
-        await client.updateSchema(thingId, schema);
+        await client.updateConfig(thingId, configList);
 
         await client.on(`device.${thingId}.data.update`, ({ data }) => {
           this.send([{ payload: { thing, data } }, null]);
