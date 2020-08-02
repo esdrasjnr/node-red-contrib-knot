@@ -15,7 +15,7 @@
       "sdk-register": "nodes/sdk/register.js",
       "sdk-set-data": "nodes/sdk/set-data.js",
       "sdk-unregister": "nodes/sdk/unregister.js",
-      "sdk-update-schema": "nodes/sdk/update-schema.js"
+      "sdk-update-config": "nodes/sdk/update-config.js"
     }
   },
   "scripts": {
