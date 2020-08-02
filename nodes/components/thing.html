@@ -1,0 +1,163 @@
+<script type="text/javascript">
+  RED.nodes.registerType('thing', {
+    category: 'KNoT components',
+    color: '#43b53f',
+    icon: 'knot.svg',
+    defaults: {
+      amqp: { value: '', required: true, type: 'amqp-broker' },
+      thingId: { value: '', required: true },
+      metadata: { value: {} },
+    },
+    inputs: 1,
+    outputs: 1,
+    label: function () {
+      return this.metadata?.name || 'thing';
+    },
+    inputLabels: 'update',
+    outputLabels: 'on publish',
+    oneditprepare: function () {
+      if (this.metadata?.id !== this.thingId) {
+        this.metadata = {};
+      }
+
+      $('#metadata-schema-list').editableList({
+        addButton: false,
+        addItem: function (container, idx, data) {
+          const { sensorId = '', name = '', valueType = '', typeId = '', unit = '' } = data;
+
+          const fragment = document.createDocumentFragment();
+          const row1 = $('<div/>', { class: 'list-row first' }).appendTo(fragment);
+          const row2 = $('<div/>', { class: 'list-row second' }).appendTo(fragment);
+
+          $('<label/>').text('Sensor ID').appendTo(row1);
+          $('<input/>', { disabled: true, type: 'text' }).val(sensorId).appendTo(row1);
+          $('<label/>').text('Name').appendTo(row1);
+          $('<input/>', { class: 'wide', disabled: true, type: 'text' }).val(name).appendTo(row1);
+
+          $('<label/>').text('Value type').appendTo(row2);
+          $('<input/>', { disabled: true, type: 'text' }).val(valueType).appendTo(row2);
+          $('<label/>').text('Type ID').appendTo(row2);
+          $('<input/>', { disabled: true, type: 'text' }).val(typeId).appendTo(row2);
+          $('<label/>').text('Unit').appendTo(row2);
+          $('<input/>', { disabled: true, type: 'text' }).val(unit).appendTo(row2);
+
+          container[0].appendChild(fragment);
+        },
+      });
+
+      const renderMetadata = () => {
+        const { name = '', schema = [] } = this.metadata;
+        $('#metadata-name').text(name);
+        $('#metadata-schema-list').editableList('empty');
+        $('#metadata-schema-list').editableList('addItems', schema);
+      };
+
+      renderMetadata();
+
+      const thingInput = $('#node-input-thingId');
+      const thingButton = $('#things-lookup');
+      const thingIcon = $('#things-lookup-icon');
+
+      thingButton.click(() => {
+        const amqp = $('#node-input-amqp').val();
+        const amqpNode = RED.nodes.node(amqp);
+        const { protocol, hostname, port, username, password, token } = amqpNode || {};
+        const config = { protocol, hostname, port, username, password, token };
+
+        thingIcon.removeClass('fa-search');
+        thingIcon.addClass('spinner');
+        thingButton.addClass('disabled');
+
+        $.getJSON('thingslist', { config }, thingsList => {
+          thingIcon.removeClass('spinner');
+          thingIcon.addClass('fa-search');
+          thingButton.removeClass('disabled');
+
+          thingInput
+            .autocomplete({
+              source: thingsList.map(({ id }) => id),
+              minLength: 0,
+              close: () => {
+                thingInput.autocomplete('destroy');
+                this.metadata = thingsList.find(({ id }) => id === thingInput.val()) || {};
+                renderMetadata();
+              },
+            })
+            .autocomplete('search', '');
+        });
+      });
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="thing">
+  <style>
+    #node-input-thingId {
+      width: 61.3%;
+    }
+
+    #things-lookup {
+      margin-left: 0.2rem;
+    }
+
+    #things-lookup.disabled {
+      margin-left: 0;
+    }
+
+    #metadata-schema-list {
+      min-height: 12rem;
+      overflow: hidden;
+    }
+
+    #metadata-schema-list .list-row {
+      display: flex;
+      align-items: center;
+    }
+
+    #metadata-schema-list .list-row.first {
+      margin-bottom: 0.3rem;
+    }
+
+    #metadata-schema-list .list-row.second {
+      margin-top: 0.3rem;
+    }
+
+    #metadata-schema-list .list-row label {
+      width: 5rem;
+      box-sizing: border-box;
+      padding-right: 0.3rem;
+      text-align: right;
+    }
+
+    #metadata-schema-list .list-row input {
+      width: 3rem;
+    }
+
+    #metadata-schema-list .list-row input.wide {
+      width: 11rem;
+    }
+  </style>
+  <div class="form-row">
+    <label for="node-input-amqp"><i class="fa fa-globe"></i> Server</label>
+    <input type="text" id="node-input-amqp">
+  </div>
+  <div class="form-row">
+    <label for="node-input-thingId"><i class="fa fa-id-badge"></i> Thing ID</label>
+    <input type="text" id="node-input-thingId">
+    <a id="things-lookup" class="red-ui-button"><i id="things-lookup-icon" class="fa fa-search"></i></a>
+  </div>
+  <div class="form-row">
+    <label><i class="fa fa-tag"></i> Name</label>
+    <label id="metadata-name"></label>
+  </div>
+  <div class="form-row">
+    <label><i class="fa fa-list"></i> Schema</label>
+  </div>
+  <div class="form-row">
+    <ol id="metadata-schema-list"></ol>
+  </div>
+</script>
+
+<script type="text/html" data-help-name="thing">
+  <p>This node represents an existing thing at KNoT Cloud, listening to events associated to it</p>
+</script>

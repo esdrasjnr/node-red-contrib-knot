@@ -15,4 +15,17 @@ module.exports = RED => {
   }
 
   RED.nodes.registerType('amqp-broker', AmqpBroker);
+
+  RED.httpAdmin.get('/thingslist', RED.auth.needsPermission('thing.read'), async (req, res) => {
+    try {
+      const { config } = req.query;
+      const client = new Client(config);
+      await client.connect();
+      const { devices } = await client.getDevices();
+      await client.close();
+      res.json(devices);
+    } catch (err) {
+      res.json([]);
+    }
+  });
 };

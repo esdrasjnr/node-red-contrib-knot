@@ -5,6 +5,7 @@
   "main": "index.js",
   "node-red": {
     "nodes": {
+      "components-thing": "nodes/components/thing.js",
       "config-amqp-broker": "nodes/config/amqp-broker.js",
       "sdk-get-data": "nodes/sdk/get-data.js",
       "sdk-get-devices": "nodes/sdk/get-devices.js",
