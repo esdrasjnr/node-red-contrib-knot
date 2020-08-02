@@ -20,36 +20,62 @@
         this.metadata = {};
       }
 
-      $('#metadata-schema-list').editableList({
+      $('#metadata-config-list').editableList({
         addButton: false,
         addItem: function (container, idx, data) {
-          const { sensorId = '', name = '', valueType = '', typeId = '', unit = '' } = data;
+          const { sensorId = '', schema = {}, event = {} } = data;
+          const { name = '', valueType = '', typeId = '', unit = '' } = schema;
+          const { change = false, timeSec = '', lowerThreshold = '', upperThreshold = '' } = event;
 
           const fragment = document.createDocumentFragment();
           const row1 = $('<div/>', { class: 'list-row first' }).appendTo(fragment);
-          const row2 = $('<div/>', { class: 'list-row second' }).appendTo(fragment);
+          const row2 = $('<div/>', { class: 'list-row' }).appendTo(fragment);
+          const row3 = $('<div/>', { class: 'list-row' }).appendTo(fragment);
+          const row4 = $('<div/>', { class: 'list-row last' }).appendTo(fragment);
 
-          $('<label/>').text('Sensor ID').appendTo(row1);
-          $('<input/>', { disabled: true, type: 'text' }).val(sensorId).appendTo(row1);
-          $('<label/>').text('Name').appendTo(row1);
-          $('<input/>', { class: 'wide', disabled: true, type: 'text' }).val(name).appendTo(row1);
+          $('<label/>', { class: 'w6' }).text('Sensor ID').appendTo(row1);
+          $('<input/>', { class: 'w3', disabled: true, type: 'number' })
+            .val(sensorId)
+            .appendTo(row1);
+          $('<label/>', { class: 'w5' }).text('Name').appendTo(row1);
+          $('<input/>', { class: 'w10', disabled: true, type: 'text' }).val(name).appendTo(row1);
 
-          $('<label/>').text('Value type').appendTo(row2);
-          $('<input/>', { disabled: true, type: 'text' }).val(valueType).appendTo(row2);
-          $('<label/>').text('Type ID').appendTo(row2);
-          $('<input/>', { disabled: true, type: 'text' }).val(typeId).appendTo(row2);
-          $('<label/>').text('Unit').appendTo(row2);
-          $('<input/>', { disabled: true, type: 'text' }).val(unit).appendTo(row2);
+          $('<label/>', { class: 'w6' }).text('Value type').appendTo(row2);
+          $('<input/>', { class: 'w3', disabled: true, type: 'number' })
+            .val(valueType)
+            .appendTo(row2);
+          $('<label/>', { class: 'w5' }).text('Type ID').appendTo(row2);
+          $('<input/>', { class: 'w4', disabled: true, type: 'number' }).val(typeId).appendTo(row2);
+          $('<label/>', { class: 'w3' }).text('Unit').appendTo(row2);
+          $('<input/>', { class: 'w3', disabled: true, type: 'number' }).val(unit).appendTo(row2);
+
+          $('<label/>', { class: 'w6' }).text('Change').appendTo(row3);
+          $('<input/>', { class: 'w3', disabled: true, type: 'checkbox' })
+            .prop('checked', change)
+            .appendTo(row3);
+          $('<label/>', { class: 'w8' }).text('Upper threshold').appendTo(row3);
+          $('<input/>', { class: 'w7', disabled: true, type: 'number' })
+            .val(upperThreshold)
+            .appendTo(row3);
+
+          $('<label/>', { class: 'w6' }).text('Time second').appendTo(row4);
+          $('<input/>', { class: 'w3', disabled: true, type: 'number' })
+            .val(timeSec)
+            .appendTo(row4);
+          $('<label/>', { class: 'w8' }).text('Lower threshold').appendTo(row4);
+          $('<input/>', { class: 'w7', disabled: true, type: 'number' })
+            .val(lowerThreshold)
+            .appendTo(row4);
 
           container[0].appendChild(fragment);
         },
       });
 
       const renderMetadata = () => {
-        const { name = '', schema = [] } = this.metadata;
+        const { name = '', config = [] } = this.metadata;
         $('#metadata-name').text(name);
-        $('#metadata-schema-list').editableList('empty');
-        $('#metadata-schema-list').editableList('addItems', schema);
+        $('#metadata-config-list').editableList('empty');
+        $('#metadata-config-list').editableList('addItems', config);
       };
 
       renderMetadata();
@@ -104,37 +130,66 @@
       margin-left: 0;
     }
 
-    #metadata-schema-list {
+    #metadata-config-list {
       min-height: 12rem;
       overflow: hidden;
     }
 
-    #metadata-schema-list .list-row {
+    #metadata-config-list .list-row {
       display: flex;
       align-items: center;
+      margin: 0.2rem 0;
     }
 
-    #metadata-schema-list .list-row.first {
-      margin-bottom: 0.3rem;
+    #metadata-config-list .list-row.first {
+      margin-top: 0;
     }
 
-    #metadata-schema-list .list-row.second {
-      margin-top: 0.3rem;
+    #metadata-config-list .list-row.last {
+      margin-bottom: 0;
     }
 
-    #metadata-schema-list .list-row label {
+    #metadata-config-list .list-row label {
       width: 5rem;
       box-sizing: border-box;
-      padding-right: 0.3rem;
-      text-align: right;
+      padding-left: 0.3rem;
     }
 
-    #metadata-schema-list .list-row input {
+    #metadata-config-list .list-row input {
+      width: 3rem;
+      box-sizing: border-box;
+    }
+
+    #node-input-config-list .list-row input[type=checkbox] {
+      margin-top: -0.3rem;
+    }
+
+    #node-input-config-list .list-row .w3 {
       width: 3rem;
     }
 
-    #metadata-schema-list .list-row input.wide {
-      width: 11rem;
+    #node-input-config-list .list-row .w4 {
+      width: 4rem;
+    }
+
+    #node-input-config-list .list-row .w5 {
+      width: 5rem;
+    }
+
+    #node-input-config-list .list-row .w6 {
+      width: 6rem;
+    }
+
+    #node-input-config-list .list-row .w7 {
+      width: 7rem;
+    }
+
+    #node-input-config-list .list-row .w8 {
+      width: 8rem;
+    }
+
+    #node-input-config-list .list-row .w10 {
+      width: 10rem;
     }
   </style>
   <div class="form-row">
@@ -151,10 +206,10 @@
     <label id="metadata-name"></label>
   </div>
   <div class="form-row">
-    <label><i class="fa fa-list"></i> Schema</label>
+    <label><i class="fa fa-list"></i> Config</label>
   </div>
   <div class="form-row">
-    <ol id="metadata-schema-list"></ol>
+    <ol id="metadata-config-list"></ol>
   </div>
 </script>
 
