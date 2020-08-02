@@ -6,7 +6,9 @@
   "node-red": {
     "nodes": {
       "config-amqp-broker": "nodes/config/amqp-broker.js",
+      "sdk-publish-data": "nodes/sdk/publish-data.js",
       "sdk-register": "nodes/sdk/register.js",
+      "sdk-set-data": "nodes/sdk/set-data.js",
       "sdk-unregister": "nodes/sdk/unregister.js",
       "sdk-update-schema": "nodes/sdk/update-schema.js"
     }
