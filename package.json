@@ -5,10 +5,10 @@
   "main": "index.js",
   "node-red": {
     "nodes": {
-      "component-thing": "nodes/component/thing.js",
       "config-amqp-broker": "nodes/config/amqp-broker.js",
       "sdk-register": "nodes/sdk/register.js",
-      "sdk-unregister": "nodes/sdk/unregister.js"
+      "sdk-unregister": "nodes/sdk/unregister.js",
+      "sdk-update-schema": "nodes/sdk/update-schema.js"
     }
   },
   "scripts": {
