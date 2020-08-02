@@ -1,5 +1,5 @@
 module.exports = RED => {
-  function SimulatedThing(config) {
+  function CloudThing(config) {
     RED.nodes.createNode(this, config);
     const { client } = RED.nodes.getNode(config.amqp);
     const { thingId, name, config: configList } = config;
@@ -51,5 +51,5 @@ module.exports = RED => {
     startListener();
   }
 
-  RED.nodes.registerType('simulated-thing', SimulatedThing);
+  RED.nodes.registerType('cloud-thing', CloudThing);
 };

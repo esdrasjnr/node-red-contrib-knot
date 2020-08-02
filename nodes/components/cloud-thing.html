@@ -1,5 +1,5 @@
 <script type="text/javascript">
-  RED.nodes.registerType('simulated-thing', {
+  RED.nodes.registerType('cloud-thing', {
     category: 'KNoT components',
     color: '#43b53f',
     icon: 'knot.svg',
@@ -12,7 +12,7 @@
     inputs: 1,
     outputs: 2,
     label: function () {
-      return this.name || 'simulated-thing';
+      return this.name || 'cloud-thing';
     },
     inputLabels: 'publish',
     outputLabels: ['on update', 'on request'],
@@ -116,7 +116,7 @@
   });
 </script>
 
-<script type="text/html" data-template-name="simulated-thing">
+<script type="text/html" data-template-name="cloud-thing">
   <style>
     #node-input-config-list {
       min-height: 10rem;
@@ -204,6 +204,6 @@
   </div>
 </script>
 
-<script type="text/html" data-help-name="simulated-thing">
+<script type="text/html" data-help-name="cloud-thing">
   <p>This node represents a simulated thing at KNoT Cloud, writing and listening to events associated to it</p>
 </script>

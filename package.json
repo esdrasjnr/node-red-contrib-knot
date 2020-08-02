@@ -5,7 +5,7 @@
   "main": "index.js",
   "node-red": {
     "nodes": {
-      "components-simulated-thing": "nodes/components/simulated-thing.js",
+      "components-cloud-thing": "nodes/components/cloud-thing.js",
       "components-thing": "nodes/components/thing.js",
       "config-amqp-broker": "nodes/config/amqp-broker.js",
       "sdk-get-data": "nodes/sdk/get-data.js",
