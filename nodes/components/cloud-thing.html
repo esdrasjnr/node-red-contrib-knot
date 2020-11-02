@@ -86,13 +86,13 @@
           const item = $(this).find(`.node-input-config-item-${id}`);
           switch (type) {
             case 'int':
-              return isNaN(parseInt(item.val())) ? '' : parseInt(item.val());
+              return isNaN(parseInt(item.val())) ? undefined : parseInt(item.val());
             case 'float':
-              return isNaN(parseFloat(item.val())) ? '' : parseFloat(item.val());
+              return isNaN(parseFloat(item.val())) ? undefined : parseFloat(item.val());
             case 'bool':
               return item.is(':checked');
             default:
-              return item.val();
+              return item.val() || undefined;
           }
         };
 
