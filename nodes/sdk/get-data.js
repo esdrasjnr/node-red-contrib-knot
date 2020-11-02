@@ -12,9 +12,7 @@ module.exports = RED => {
       }
 
       try {
-        await client.connect();
         await client.getData(id, sensors);
-        await client.close();
         done();
       } catch (err) {
         done(err);

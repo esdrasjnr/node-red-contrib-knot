@@ -11,9 +11,7 @@ module.exports = RED => {
       }
 
       try {
-        await client.connect();
         await client.publishData(id, data);
-        await client.close();
         done();
       } catch (err) {
         done(err);

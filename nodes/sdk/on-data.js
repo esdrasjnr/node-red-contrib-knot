@@ -4,15 +4,6 @@ module.exports = RED => {
     const { client } = RED.nodes.getNode(config.amqp);
     const { event, thingId, once } = config;
 
-    this.on('close', async done => {
-      try {
-        await client.close();
-        done();
-      } catch (err) {
-        done(err);
-      }
-    });
-
     const eventName = event === 'data' ? event : `device.${thingId}.${event}`;
     const onMessage = payload => {
       this.send({ payload });
@@ -20,7 +11,6 @@ module.exports = RED => {
 
     const startListener = async () => {
       try {
-        await client.connect();
         if (once) {
           await client.once(eventName, onMessage);
         } else {

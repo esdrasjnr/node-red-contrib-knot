@@ -5,9 +5,7 @@ module.exports = RED => {
 
     this.on('input', async (msg, send, done) => {
       try {
-        await client.connect();
         const { devices } = await client.getDevices();
-        await client.close();
         msg.payload = devices;
         send(msg);
         done();
