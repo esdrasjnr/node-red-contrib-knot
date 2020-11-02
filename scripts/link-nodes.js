@@ -28,4 +28,7 @@ const nodes = files
   .reduce((a, b) => ({ ...a, ...b }), {});
 
 packageFile['node-red'] = { nodes };
-fs.writeFileSync(path.join(__dirname, '..', 'package.json'), JSON.stringify(packageFile, null, 2));
+fs.writeFileSync(
+  path.join(__dirname, '..', 'package.json'),
+  `${JSON.stringify(packageFile, null, 2)}\n`
+);
