@@ -23,37 +23,38 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@cesarbr/knot-cloud-sdk-js-amqp@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@cesarbr/knot-cloud-sdk-js-amqp/-/knot-cloud-sdk-js-amqp-2.0.0.tgz#a2f8461c6ced516745e1dea21ec1293d08bc7b4a"
-  integrity sha512-JgyqaanMwVdqMVEpwcKUf6qJ6T6cRmvdT6u+72ZVhNnsRNLqXBLfpViEv3OEgY44YjHMBfGt95upSZWriXzvbQ==
+"@cesarbr/knot-cloud-sdk-js-amqp@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@cesarbr/knot-cloud-sdk-js-amqp/-/knot-cloud-sdk-js-amqp-3.0.0.tgz#d3f3d29ab3c32e405834de551855dbacb80b5619"
+  integrity sha512-HUS0f1YCcUKLr+70w7UK0J5wweX3g5OLogX6HIj76MjIq+8tcxpEY+wk9DHsZM4AlHitmgO2SqxCz6YUoXUZHQ==
   dependencies:
+    amqp-connection-manager "^3.2.0"
     amqplib "^0.5.5"
     uniqid "^5.2.0"
 
-"@cesarbr/knot-cloud-sdk-js-authenticator@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@cesarbr/knot-cloud-sdk-js-authenticator/-/knot-cloud-sdk-js-authenticator-2.1.0.tgz#f03e0b7957b2ac69bad238f390a0db3b5211c742"
-  integrity sha512-zvZSqq6+gBKZXLI3LLzd3Qji6iq8JzAnxNW+2HiyFVQ9tJI5emvPLuhkNpsQZCwrJTfC1UMw3h8ixAqpc/M2ow==
+"@cesarbr/knot-cloud-sdk-js-authenticator@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@cesarbr/knot-cloud-sdk-js-authenticator/-/knot-cloud-sdk-js-authenticator-2.1.1.tgz#4483322f7175bab50f3481ef1c3cbe8427a57a54"
+  integrity sha512-FZ1suKKyANGYh0RqQaKNSEQCCpMiotZA+Cjts/3ieAmw4qQO9ChV/fO/gVPL+65uVmN7VMuXXyPvP2g5XEMcwg==
   dependencies:
     axios "^0.19.0"
 
-"@cesarbr/knot-cloud-sdk-js-storage@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@cesarbr/knot-cloud-sdk-js-storage/-/knot-cloud-sdk-js-storage-1.0.2.tgz#94d98f42673628c1aaf95f884ff32670af5b1161"
-  integrity sha512-35kA7LTgSodH1VCQ7aIltmuSN5SYz0ADQEXnmXuwbmKB5rukNUejCDziGz342mdvczVlRJ8BGF8fckyiTCxWYQ==
+"@cesarbr/knot-cloud-sdk-js-storage@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@cesarbr/knot-cloud-sdk-js-storage/-/knot-cloud-sdk-js-storage-1.0.3.tgz#25dac25d63c80233e595794da084c4a8db637056"
+  integrity sha512-cgr5heqCxhAAdAY/Do6JfEP2qp8kunKrXWtCSXiyNeX616fZrEUJu8vuKn5R7oQgFth+CXK/PcECKvA+zps2ww==
   dependencies:
     axios "^0.19.0"
     url "^0.11.0"
 
-"@cesarbr/knot-cloud-sdk-js@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@cesarbr/knot-cloud-sdk-js/-/knot-cloud-sdk-js-3.0.0.tgz#cdb9bc3cfd9020e967b82f70ce6f9e6c232017cb"
-  integrity sha512-MZZqCikF/pBLRrBTJZqayUceYiX5sw1MS7CxExg0ZNO3KA3nXJT0CZ3uAr1W7acUekNJSOW4PhD2ZosZnYO0DA==
+"@cesarbr/knot-cloud-sdk-js@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@cesarbr/knot-cloud-sdk-js/-/knot-cloud-sdk-js-3.2.0.tgz#67c2018271fece45eb2fdde2e916e59314e9381e"
+  integrity sha512-PPcAIfWXvaGX6gR1rKu9jG0dehQy2sA3T2r4KYpimWkbHeKicrmOanrhyZro2GRehdUULCSNkRhf2MCUVL0MHw==
   dependencies:
-    "@cesarbr/knot-cloud-sdk-js-amqp" "^2.0.0"
-    "@cesarbr/knot-cloud-sdk-js-authenticator" "^2.1.0"
-    "@cesarbr/knot-cloud-sdk-js-storage" "^1.0.2"
+    "@cesarbr/knot-cloud-sdk-js-amqp" "^3.0.0"
+    "@cesarbr/knot-cloud-sdk-js-authenticator" "^2.1.1"
+    "@cesarbr/knot-cloud-sdk-js-storage" "^1.0.3"
     "@rollup/plugin-json" "^4.0.2"
 
 "@rollup/plugin-json@^4.0.2":
@@ -119,6 +120,13 @@ ajv@^6.10.0, ajv@^6.10.2:
     fast-json-stable-stringify "^2.0.0"
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
+
+amqp-connection-manager@^3.2.0:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/amqp-connection-manager/-/amqp-connection-manager-3.2.1.tgz#ac33ddb3effb577f2f8e45f6714be5dbdd5b2b1d"
+  integrity sha512-dDs2hg8MEtuYlXMzIqWwFx4N5Fjm8vXAQNyukDavyrYsgnQVt+rtJ+oosMP7eOXukSdquCoVqOaWr/Ih6txwTA==
+  dependencies:
+    promise-breaker "^5.0.0"
 
 amqplib@^0.5.5:
   version "0.5.6"
@@ -1403,6 +1411,11 @@ progress@^2.0.0:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
+
+promise-breaker@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/promise-breaker/-/promise-breaker-5.0.0.tgz#58e8541f1619554057da95a211794d7834d30c1d"
+  integrity sha512-mgsWQuG4kJ1dtO6e/QlNDLFtMkMzzecsC69aI5hlLEjGHFNpHrvGhFi4LiK5jg2SMQj74/diH+wZliL9LpGsyA==
 
 pump@^3.0.0:
   version "3.0.0"
