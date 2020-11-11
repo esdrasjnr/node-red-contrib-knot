@@ -5,9 +5,8 @@
   "main": "index.js",
   "node-red": {
     "nodes": {
-      "things-cloud-thing": "nodes/things/cloud-thing.js",
-      "things-thing": "nodes/things/thing.js",
       "config-amqp-broker": "nodes/config/amqp-broker.js",
+      "config-modbus": "nodes/config/modbus.js",
       "sdk-get-data": "nodes/sdk/get-data.js",
       "sdk-get-devices": "nodes/sdk/get-devices.js",
       "sdk-on-data": "nodes/sdk/on-data.js",
@@ -15,7 +14,9 @@
       "sdk-register": "nodes/sdk/register.js",
       "sdk-set-data": "nodes/sdk/set-data.js",
       "sdk-unregister": "nodes/sdk/unregister.js",
-      "sdk-update-config": "nodes/sdk/update-config.js"
+      "sdk-update-config": "nodes/sdk/update-config.js",
+      "things-cloud-thing": "nodes/things/cloud-thing.js",
+      "things-thing": "nodes/things/thing.js"
     }
   },
   "scripts": {
