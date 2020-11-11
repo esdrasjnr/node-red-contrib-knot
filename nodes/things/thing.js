@@ -1,8 +1,11 @@
+const { Client } = require('@cesarbr/knot-cloud-sdk-js');
+
 module.exports = RED => {
   function Thing(config) {
     RED.nodes.createNode(this, config);
-    const { client } = RED.nodes.getNode(config.amqp);
+    const { broker } = RED.nodes.getNode(config.amqp);
     const { metadata: thing } = config;
+    const client = new Client(broker);
 
     this.on('close', async done => {
       try {
