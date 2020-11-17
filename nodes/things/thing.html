@@ -20,7 +20,7 @@
         this.metadata = {};
       }
 
-      $('#metadata-config-list').editableList({
+      $('#node-input-metadata-list').editableList({
         addButton: false,
         addItem: function (container, idx, data) {
           const { sensorId = '', schema = {}, event = {} } = data;
@@ -74,8 +74,8 @@
       const renderMetadata = () => {
         const { name = '', config = [] } = this.metadata;
         $('#metadata-name').text(name);
-        $('#metadata-config-list').editableList('empty');
-        $('#metadata-config-list').editableList('addItems', config);
+        $('#node-input-metadata-list').editableList('empty');
+        $('#node-input-metadata-list').editableList('addItems', config);
       };
 
       renderMetadata();
@@ -130,65 +130,65 @@
       margin-left: 0;
     }
 
-    #metadata-config-list {
+    #node-input-metadata-list {
       min-height: 17rem;
       overflow: hidden;
     }
 
-    #metadata-config-list .list-row {
+    #node-input-metadata-list .list-row {
       display: flex;
       align-items: center;
       margin: 0.2rem 0;
     }
 
-    #metadata-config-list .list-row.first {
+    #node-input-metadata-list .list-row.first {
       margin-top: 0;
     }
 
-    #metadata-config-list .list-row.last {
+    #node-input-metadata-list .list-row.last {
       margin-bottom: 0;
     }
 
-    #metadata-config-list .list-row label {
-      width: 5rem;
+    #node-input-metadata-list .list-row label {
+      width: 6rem;
       box-sizing: border-box;
       padding-left: 0.3rem;
     }
 
-    #metadata-config-list .list-row input {
+    #node-input-metadata-list .list-row input {
       width: 3rem;
       box-sizing: border-box;
     }
 
-    #node-input-config-list .list-row input[type=checkbox] {
+    #node-input-metadata-list .list-row input[type=checkbox] {
       margin-top: -0.3rem;
     }
 
-    #node-input-config-list .list-row .w3 {
+    #node-input-metadata-list .list-row .w3 {
       width: 3rem;
     }
 
-    #node-input-config-list .list-row .w4 {
+    #node-input-metadata-list .list-row .w4 {
       width: 4rem;
     }
 
-    #node-input-config-list .list-row .w5 {
+    #node-input-metadata-list .list-row .w5 {
       width: 5rem;
     }
 
-    #node-input-config-list .list-row .w6 {
+    #node-input-metadata-list .list-row .w6 {
       width: 6rem;
     }
 
-    #node-input-config-list .list-row .w7 {
+    #node-input-metadata-list .list-row .w7 {
       width: 7rem;
     }
 
-    #node-input-config-list .list-row .w8 {
+    #node-input-metadata-list .list-row .w8 {
       width: 8rem;
     }
 
-    #node-input-config-list .list-row .w10 {
+    #node-input-metadata-list .list-row .w10 {
       width: 10rem;
     }
   </style>
@@ -209,7 +209,7 @@
     <label><i class="fa fa-list"></i> Config</label>
   </div>
   <div class="form-row">
-    <ol id="metadata-config-list"></ol>
+    <ol id="node-input-metadata-list"></ol>
   </div>
 </script>
 
