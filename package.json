@@ -1,12 +1,14 @@
 {
   "name": "node-red-contrib-knot",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Node-RED library for KNoT meta plataform",
   "main": "index.js",
   "node-red": {
     "nodes": {
       "config-amqp-broker": "nodes/config/amqp-broker.js",
+      "config-api-gateway": "nodes/config/api-gateway.js",
       "config-modbus": "nodes/config/modbus.js",
+      "config-storage": "nodes/config/storage.js",
       "sdk-get-data": "nodes/sdk/get-data.js",
       "sdk-get-devices": "nodes/sdk/get-devices.js",
       "sdk-on-data": "nodes/sdk/on-data.js",
@@ -15,8 +17,10 @@
       "sdk-set-data": "nodes/sdk/set-data.js",
       "sdk-unregister": "nodes/sdk/unregister.js",
       "sdk-update-config": "nodes/sdk/update-config.js",
+      "settings-knot-cloud": "nodes/settings/knot-cloud.js",
       "things-cloud-thing": "nodes/things/cloud-thing.js",
-      "things-thing": "nodes/things/thing.js"
+      "things-thing": "nodes/things/thing.js",
+      "things-virtual-thing": "nodes/things/virtual-thing.js"
     }
   },
   "scripts": {
