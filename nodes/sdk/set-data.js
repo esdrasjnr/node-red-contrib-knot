@@ -12,7 +12,8 @@ module.exports = RED => {
 
       try {
         await client.setData(id, data);
-        done();
+        msg.payload = { id, data };
+        done(msg);
       } catch (err) {
         done(err);
       }

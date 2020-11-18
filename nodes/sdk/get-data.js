@@ -13,6 +13,8 @@ module.exports = RED => {
 
       try {
         await client.getData(id, sensors);
+        msg.payload = { id, sensors };
+        send(msg);
         done();
       } catch (err) {
         done(err);

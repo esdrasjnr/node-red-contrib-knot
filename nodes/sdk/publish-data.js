@@ -12,6 +12,8 @@ module.exports = RED => {
 
       try {
         await client.publishData(id, data);
+        msg.payload = { id, data };
+        send(msg);
         done();
       } catch (err) {
         done(err);

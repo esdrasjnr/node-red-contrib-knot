@@ -12,6 +12,8 @@ module.exports = RED => {
 
       try {
         await client.unregister(id);
+        msg.payload = { id };
+        send(msg);
         done();
       } catch (err) {
         done(err);

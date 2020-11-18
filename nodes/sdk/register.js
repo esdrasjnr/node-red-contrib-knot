@@ -12,7 +12,8 @@ module.exports = RED => {
 
       try {
         await client.register(id, name);
-        done();
+        msg.payload = { id, name };
+        done(msg);
       } catch (err) {
         done(err);
       }
