@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-knot",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Node-RED library for KNoT meta plataform",
   "main": "index.js",
   "node-red": {
