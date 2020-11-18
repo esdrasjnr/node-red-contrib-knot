@@ -1,0 +1,229 @@
+<script type="text/javascript">
+  RED.nodes.registerType('virtual-thing', {
+    category: 'KNoT things',
+    color: '#43b53f',
+    icon: 'knot.svg',
+    defaults: {
+      amqp: { value: '', required: true, type: 'amqp-broker' },
+      modbus: { value: '', required: true, type: 'modbus' },
+      slaveId: { value: '', required: true },
+      name: { value: '', required: true },
+      config: { value: [] },
+    },
+    inputs: 1,
+    outputs: 1,
+    label: function () {
+      return this.name || 'virtual-thing';
+    },
+    inputLabels: 'update',
+    outputLabels: 'on publish',
+    oneditprepare: function () {
+      $('#node-input-config-list').editableList({
+        addItem: function (container, idx, data) {
+          const { sensorId = '', schema = {}, event = {}, modbus = {} } = data;
+          const { name = '', valueType = '', typeId = '', unit = '' } = schema;
+          const { change = false, timeSec = '', lowerThreshold = '', upperThreshold = '' } = event;
+          const { registerAddress = '', bitOffset = '' } = modbus;
+
+          const fragment = document.createDocumentFragment();
+          const row1 = $('<div/>', { class: 'list-row first' }).appendTo(fragment);
+          const row2 = $('<div/>', { class: 'list-row' }).appendTo(fragment);
+          const row3 = $('<div/>', { class: 'list-row' }).appendTo(fragment);
+          const row4 = $('<div/>', { class: 'list-row' }).appendTo(fragment);
+          const row5 = $('<div/>', { class: 'list-row last' }).appendTo(fragment);
+
+          $('<label/>', { class: 'w6' }).text('Sensor ID').appendTo(row1);
+          $('<input/>', { class: 'node-input-config-item-sensorId w3', type: 'number' })
+            .val(sensorId)
+            .appendTo(row1);
+          $('<label/>', { class: 'w5' }).text('Name').appendTo(row1);
+          $('<input/>', { class: 'node-input-config-item-name w10', type: 'text' })
+            .val(name)
+            .appendTo(row1);
+
+          $('<label/>', { class: 'w6' }).text('Value type').appendTo(row2);
+          $('<input/>', { class: 'node-input-config-item-valueType w3', type: 'number' })
+            .val(valueType)
+            .appendTo(row2);
+          $('<label/>', { class: 'w5' }).text('Type ID').appendTo(row2);
+          $('<input/>', { class: 'node-input-config-item-typeId w4', type: 'number' })
+            .val(typeId)
+            .appendTo(row2);
+          $('<label/>', { class: 'w3' }).text('Unit').appendTo(row2);
+          $('<input/>', { class: 'node-input-config-item-unit w3', type: 'number' })
+            .val(unit)
+            .appendTo(row2);
+
+          $('<label/>', { class: 'w6' }).text('Change').appendTo(row3);
+          $('<input/>', { class: 'node-input-config-item-change w3', type: 'checkbox' })
+            .prop('checked', change)
+            .appendTo(row3);
+          $('<label/>', { class: 'w8' }).text('Upper threshold').appendTo(row3);
+          $('<input/>', { class: 'node-input-config-item-upperThreshold w7', type: 'number' })
+            .val(upperThreshold)
+            .appendTo(row3);
+
+          $('<label/>', { class: 'w6' }).text('Time second').appendTo(row4);
+          $('<input/>', { class: 'node-input-config-item-timeSec w3', type: 'number' })
+            .val(timeSec)
+            .appendTo(row4);
+          $('<label/>', { class: 'w8' }).text('Lower threshold').appendTo(row4);
+          $('<input/>', { class: 'node-input-config-item-lowerThreshold w7', type: 'number' })
+            .val(lowerThreshold)
+            .appendTo(row4);
+
+          $('<label/>', { class: 'w8' }).text('Register address').appendTo(row5);
+          $('<input/>', { class: 'node-input-config-item-registerAddress w7', type: 'number' })
+            .val(registerAddress)
+            .appendTo(row5);
+          $('<label/>', { class: 'w5' }).text('Bit offset').appendTo(row5);
+          $('<input/>', { class: 'node-input-config-item-bitOffset w4', type: 'number' })
+            .val(bitOffset)
+            .appendTo(row5);
+
+          container[0].appendChild(fragment);
+        },
+        removable: true,
+      });
+
+      $('#node-input-config-list').editableList('addItems', this.config);
+    },
+    oneditsave: function () {
+      const config = $('#node-input-config-list').editableList('items');
+      const node = this;
+      node.config = [];
+
+      config.each(function () {
+        const getValue = (id, type) => {
+          const item = $(this).find(`.node-input-config-item-${id}`);
+          switch (type) {
+            case 'int':
+              return isNaN(parseInt(item.val())) ? undefined : parseInt(item.val());
+            case 'float':
+              return isNaN(parseFloat(item.val())) ? undefined : parseFloat(item.val());
+            case 'bool':
+              return item.is(':checked');
+            default:
+              return item.val() || undefined;
+          }
+        };
+
+        node.config.push({
+          sensorId: getValue('sensorId', 'int'),
+          schema: {
+            name: getValue('name', 'str'),
+            valueType: getValue('valueType', 'int'),
+            typeId: getValue('typeId', 'int'),
+            unit: getValue('unit', 'int'),
+          },
+          event: {
+            change: getValue('change', 'bool'),
+            timeSec: getValue('timeSec', 'int'),
+            upperThreshold: getValue('upperThreshold', 'float'),
+            lowerThreshold: getValue('lowerThreshold', 'float'),
+          },
+          modbus: {
+            registerAddress: getValue('registerAddress', 'int'),
+            bitOffset: getValue('bitOffset', 'int'),
+          },
+        });
+      });
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="virtual-thing">
+  <style>
+    #node-input-config-list {
+      min-height: 13rem;
+      overflow: hidden;
+    }
+
+    #node-input-config-list .list-row {
+      display: flex;
+      align-items: center;
+      margin: 0.2rem 0;
+    }
+
+    #node-input-config-list .list-row.first {
+      margin-top: 0;
+    }
+
+    #node-input-config-list .list-row.last {
+      margin-bottom: 0;
+    }
+
+    #node-input-config-list .list-row label {
+      width: 6rem;
+      box-sizing: border-box;
+      padding-left: 0.3rem;
+    }
+
+    #node-input-config-list .list-row input {
+      width: 3rem;
+      box-sizing: border-box;
+    }
+
+    #node-input-config-list .list-row input[type=number]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+
+    #node-input-config-list .list-row input[type=checkbox] {
+      margin-top: -0.3rem;
+    }
+
+    #node-input-config-list .list-row .w3 {
+      width: 3rem;
+    }
+
+    #node-input-config-list .list-row .w4 {
+      width: 4rem;
+    }
+
+    #node-input-config-list .list-row .w5 {
+      width: 5rem;
+    }
+
+    #node-input-config-list .list-row .w6 {
+      width: 6rem;
+    }
+
+    #node-input-config-list .list-row .w7 {
+      width: 7rem;
+    }
+
+    #node-input-config-list .list-row .w8 {
+      width: 8rem;
+    }
+
+    #node-input-config-list .list-row .w10 {
+      width: 10rem;
+    }
+  </style>
+  <div class="form-row">
+    <label for="node-input-amqp"><i class="fa fa-globe"></i> Server</label>
+    <input type="text" id="node-input-amqp">
+  </div>
+  <div class="form-row">
+    <label for="node-input-modbus"><i class="fa fa-globe"></i> Modbus</label>
+    <input type="text" id="node-input-modbus">
+  </div>
+  <div class="form-row">
+    <label for="node-input-slaveId"><i class="fa fa-id-badge"></i> Slave ID</label>
+    <input type="text" id="node-input-slaveId">
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name">
+  </div>
+  <div class="form-row">
+    <label><i class="fa fa-list"></i> Config</label>
+  </div>
+  <div class="form-row">
+    <ol id="node-input-config-list"></ol>
+  </div>
+</script>
+
+<script type="text/html" data-help-name="virtual-thing">
+  <p>This node configure and instantiate a KNoT VirtualThing and also interacts with it</p>
+</script>
