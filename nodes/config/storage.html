@@ -1,0 +1,49 @@
+<script type="text/javascript">
+  RED.nodes.registerType('storage', {
+    category: 'config',
+    color: '#43b53f',
+    icon: 'knot.svg',
+    defaults: {
+      name: { value: '' },
+      protocol: { value: 'http', required: true },
+      hostname: { value: 'localhost', required: true },
+      port: { value: 80, required: true },
+    },
+    label: function () {
+      const url = `${this.protocol}://${this.hostname}:${this.port}`;
+      return this.name || url;
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="storage">
+  <style>
+    #node-config-input-hostname {
+      width: 45%;
+    }
+
+    #node-config-input-port {
+      width: 13%;
+    }
+
+    .node-config-input-port-label {
+      box-sizing: border-box;
+      padding-right: 0.3rem;
+      text-align: right;
+    }
+  </style>
+  <div class="form-row">
+    <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-config-input-name">
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-hostname"><i class="fa fa-globe"></i> Server</label>
+    <input type="text" id="node-config-input-hostname" placeholder="e.g. localhost">
+    <label for="node-config-input-port" class="node-config-input-port-label" style="width:3.5rem;"> Port</label>
+    <input type="text" id="node-config-input-port">
+  </div>
+</script>
+
+<script type="text/html" data-help-name="storage">
+  <p>This node configures the HTTP interface for KNoT Cloud Storage</p>
+</script>

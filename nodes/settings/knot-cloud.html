@@ -1,0 +1,39 @@
+<script type="text/javascript">
+  RED.nodes.registerType('knot-cloud', {
+    category: 'KNoT settings',
+    color: '#43b53f',
+    icon: 'knot.svg',
+    defaults: {
+      amqp: { value: '', required: true, type: 'amqp-broker' },
+      api: { value: '', required: true, type: 'api-gateway' },
+      storage: { value: '', required: true, type: 'storage' },
+      name: { value: 'KNoT Cloud', required: true },
+    },
+    label: function () {
+      return this.name || 'knot-cloud';
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="knot-cloud">
+  <div class="form-row">
+    <label for="node-input-amqp"><i class="fa fa-globe"></i> Broker</label>
+    <input type="text" id="node-input-amqp">
+  </div>
+  <div class="form-row">
+    <label for="node-input-api"><i class="fa fa-globe"></i> API Gateway</label>
+    <input type="text" id="node-input-api">
+  </div>
+  <div class="form-row">
+    <label for="node-input-storage"><i class="fa fa-globe"></i> Storage</label>
+    <input type="text" id="node-input-storage">
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name">
+  </div>
+</script>
+
+<script type="text/html" data-help-name="knot-cloud">
+  <p>This node configure and instantiate a KNoT Cloud stack</p>
+</script>
