@@ -13,7 +13,8 @@ module.exports = RED => {
       try {
         await client.updateConfig(id, configList);
         msg.payload = { id, config: configList };
-        done(msg);
+        send(msg);
+        done();
       } catch (err) {
         done(err);
       }
